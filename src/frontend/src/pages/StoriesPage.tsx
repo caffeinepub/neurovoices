@@ -5,7 +5,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "@tanstack/react-router";
 import { BookOpen, Heart, Loader2, MessageCircle, Send } from "lucide-react";
@@ -40,18 +39,6 @@ const DISPLAYED_CONDITIONS = [
 
 // OCD stories are excluded from display
 const EXCLUDED_CONDITIONS = new Set([Condition.ocd]);
-
-function timeAgo(timestamp: bigint): string {
-  const ms = Number(timestamp / 1_000_000n);
-  const diff = Date.now() - ms;
-  const mins = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
-  const days = Math.floor(diff / 86400000);
-  if (mins < 1) return "just now";
-  if (mins < 60) return `${mins}m ago`;
-  if (hours < 24) return `${hours}h ago`;
-  return `${days}d ago`;
-}
 
 function StoryDialog({
   story,
@@ -88,9 +75,17 @@ function StoryDialog({
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent
         data-ocid="stories.dialog"
-        className="max-w-2xl w-full p-0 overflow-hidden"
+        className="max-w-2xl w-full p-0 overflow-hidden flex flex-col"
+        style={{ maxHeight: "90dvh" }}
       >
-        <ScrollArea className="max-h-[88vh]">
+        <div
+          className="overflow-y-auto flex-1"
+          style={{
+            WebkitOverflowScrolling: "touch",
+            overscrollBehavior: "contain",
+            touchAction: "pan-y",
+          }}
+        >
           <div className="p-6 md:p-8">
             <DialogHeader className="mb-5">
               <div className="mb-2">
@@ -103,9 +98,6 @@ function StoryDialog({
               <DialogTitle className="font-display text-2xl md:text-3xl font-bold text-foreground leading-snug">
                 {story.title}
               </DialogTitle>
-              <p className="text-xs text-muted-foreground mt-1">
-                {timeAgo(story.timestamp)}
-              </p>
             </DialogHeader>
 
             <p className="text-foreground/80 leading-relaxed text-base mb-8 whitespace-pre-wrap">
@@ -191,9 +183,6 @@ function StoryDialog({
                         <p className="text-sm text-foreground leading-relaxed">
                           {comment.text}
                         </p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {timeAgo(comment.timestamp)}
-                        </p>
                       </div>
                     ))}
                   </div>
@@ -201,7 +190,7 @@ function StoryDialog({
               </div>
             </div>
           </div>
-        </ScrollArea>
+        </div>
       </DialogContent>
     </Dialog>
   );
@@ -236,9 +225,6 @@ function StoryCard({
         <h3 className="font-display text-lg font-semibold text-foreground leading-snug flex-1">
           {story.title}
         </h3>
-        <span className="text-xs text-muted-foreground whitespace-nowrap mt-1">
-          {timeAgo(story.timestamp)}
-        </span>
       </div>
       <div className="mb-3">
         <span
@@ -282,7 +268,7 @@ export function StoriesPage() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="mb-10"
+          className="mb-6"
         >
           <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground mb-3">
             Community Stories
@@ -292,6 +278,20 @@ export function StoriesPage() {
             conditions. Click a story to read it fully and leave a word of
             encouragement.
           </p>
+        </motion.div>
+
+        {/* Return visit nudge */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+          className="mb-8 inline-flex items-center gap-2 bg-primary/8 border border-primary/20 text-primary/80 rounded-xl px-4 py-2.5 text-sm"
+        >
+          <Heart className="w-4 h-4 shrink-0" />
+          <span>
+            Posted your story? Come back anytime to see if someone left you a
+            message of support.
+          </span>
         </motion.div>
 
         <motion.div

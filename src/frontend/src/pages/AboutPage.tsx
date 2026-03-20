@@ -78,62 +78,13 @@ export function AboutPage() {
             <div className="w-12 h-1 bg-primary rounded-full mb-6" />
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="space-y-5 mb-16"
-          >
-            <p className="text-xl text-foreground leading-relaxed font-medium">
-              The purpose of Beyond Neural is to dismantle the invisible
-              barriers that people with neurological conditions face in their
-              careers, social lives, and self-perception. We believe that a
-              brain&apos;s &ldquo;wiring&rdquo; should never be a source of
-              shame or a hurdle to professional excellence.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mb-16"
-          >
-            <h2 className="font-display text-2xl font-bold text-foreground mb-8">
-              What we stand for
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-5">
-              {values.map((v, i) => (
-                <motion.div
-                  key={v.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                  className="bg-card rounded-xl p-6 shadow-soft"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                    <v.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-semibold text-foreground mb-2">
-                    {v.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {v.desc}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Stay Connected Section */}
+          {/* Stay Connected Section - above purpose paragraph */}
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="rounded-2xl bg-primary/8 border border-primary/20 px-8 py-10"
+            className="rounded-2xl bg-primary/8 border border-primary/20 px-8 py-10 mb-16"
           >
             <h2 className="font-display text-2xl font-bold text-foreground mb-3">
               Stay connected to Beyond Neural
@@ -225,6 +176,55 @@ export function AboutPage() {
                 </Button>
               </form>
             )}
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="space-y-5 mb-16"
+          >
+            <p className="text-xl text-foreground leading-relaxed font-medium">
+              The purpose of Beyond Neural is to dismantle the invisible
+              barriers that people with neurological conditions face in their
+              careers, social lives, and self-perception. We believe that a
+              brain&apos;s &ldquo;wiring&rdquo; should never be a source of
+              shame or a hurdle to professional excellence.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-16"
+          >
+            <h2 className="font-display text-2xl font-bold text-foreground mb-8">
+              What we stand for
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-5">
+              {values.map((v, i) => (
+                <motion.div
+                  key={v.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: i * 0.08 }}
+                  className="bg-card rounded-xl p-6 shadow-soft"
+                >
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                    <v.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-foreground mb-2">
+                    {v.title}
+                  </h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {v.desc}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>
